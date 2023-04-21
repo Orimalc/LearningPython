@@ -1,9 +1,9 @@
 import numpy as np
 from PIL import Image
 
-image = Image.open("Heart.png")
-img_array = np.array(image)
-image.show()
+#image = Image.open("Heart.png")
+#img_array = np.array(image)
+#image.show()
 # kernel convolution
 
 
@@ -58,7 +58,6 @@ def kernel_convolution_with_iterator(array, radius=1):
 
     for index, x in np.ndenumerate(array):
         buffer_array = np.zeros(shape=3, dtype="i8")
-        # TODO square aus der Schleife ziehen und immer nur zeilen/reihenweise ändern
         square = np.asarray(array[np.max([0, index[0] - radius]): np.min([index[0] + radius + 1, amount_rows]),
                             np.max([0, index[1] - radius]): np.min([index[1] + radius + 1, amount_columns])])
 
@@ -73,15 +72,15 @@ def kernel_convolution_with_iterator(array, radius=1):
 
 
 def kernel_convolution_element(array, radius=1):
-    # TODO np.convolve()
+    # TODO np.convolve() documenation nachschauen
     pass
 
 
 #print(img_array.shape)
 #mean_pixel_value(img_array)
-new_img_array = kernel_convolution_with_iterator(img_array, 50)
-new_image = Image.fromarray(new_img_array)
-new_image.show()
+#new_img_array = kernel_convolution_with_iterator(img_array, 50)
+#new_image = Image.fromarray(new_img_array)
+#new_image.show()
 #new_img_array = kernel_convolution_loop(img_array, 50)
 #new_image = Image.fromarray(new_img_array)
 #new_image.show()
@@ -92,3 +91,4 @@ new_image.show()
 #blurred_jessi_img = Image.fromarray(kernel_convolution_slice(jessi_array, radius=80))
 #blurred_jessi_img.show()
 #blurred_jessi_img.save("Jessi_und_Molly_r80.jpg")
+exit()
