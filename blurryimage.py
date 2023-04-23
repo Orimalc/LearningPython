@@ -1,9 +1,10 @@
 import numpy as np
+import scipy
 from PIL import Image
 
-#image = Image.open("Heart.png")
-#img_array = np.array(image)
-#image.show()
+image = Image.open("heart.png")
+img_array = np.array(image)
+image.show()
 # kernel convolution
 
 
@@ -72,15 +73,30 @@ def kernel_convolution_with_iterator(array, radius=1):
 
 
 def kernel_convolution_element(array, radius=1):
-    # TODO np.convolve() documenation nachschauen
-    pass
+    kernel = np.divide(np.ones((radius + 2, radius + 2, 1)), (radius + 2)**2)
+    new_image = scipy.signal.convolve(array, kernel, mode= 'same')
+    new_image = np.asarray(new_image, dtype='u1')
+    print(kernel.shape)
+    print(new_image.shape)
+    return new_image
 
+def gaussian_convolution_element(array, radius=1):
+    para_a = 2
+    kernel = np.reshape(np.exp(-np.power(np.linspace(-radius / para_a, radius / para_a, num=para_a*radius + 1), 2)), (para_a*radius+1, 1))
+    kernel = kernel @ np.transpose(kernel)
+    kernel = np.reshape(kernel, (para_a*radius+1, para_a*radius+1, 1))
+    print(kernel.shape)
+    print(array.shape)
+    new_image = scipy.signal.convolve(array, kernel, mode='same')
+    new_image = np.asarray(new_image, dtype='u1')
+    return new_image
 
 #print(img_array.shape)
 #mean_pixel_value(img_array)
-#new_img_array = kernel_convolution_with_iterator(img_array, 50)
-#new_image = Image.fromarray(new_img_array)
-#new_image.show()
+#kernel_convolution_element(img_array, 2)
+new_img_array = gaussian_convolution_element(img_array,5)
+new_image = Image.fromarray(new_img_array)
+new_image.show()
 #new_img_array = kernel_convolution_loop(img_array, 50)
 #new_image = Image.fromarray(new_img_array)
 #new_image.show()
