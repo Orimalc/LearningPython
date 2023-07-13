@@ -3,7 +3,7 @@ import scipy
 from PIL import Image
 
 # image to array conversion
-image = Image.open("test.png")
+image = Image.open("test.jpg")
 img_array = np.array(image)
 image.show()
 
@@ -77,7 +77,11 @@ def gaussian_convolution(array, radius: int = 1, a=1.0):
 
 
 # parameter chosen through experimentation
-new_img_array = gaussian_convolution(img_array, 128, 0.032)
+#new_img_array = gaussian_convolution(img_array, 128, 0.032)
+new_img_array = gaussian_convolution(img_array, 160, 0.0090)
+new_image = Image.fromarray(new_img_array)
+new_image.show()
+new_img_array = gaussian_convolution(img_array, 40, 0.0010)
 new_image = Image.fromarray(new_img_array)
 new_image.show()
 # new_image.save("blurred_test.png")
