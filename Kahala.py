@@ -63,12 +63,36 @@ class Game:
         return False
 
     def try_to_steal(self, distance, column, amount_of_stones, diff=0):
-        #TODO implement with -diff > 0
-        if self.turn_of_player == 1 and column + amount_of_stones < 6:
+
+        if -diff > 0:
+            column = -diff - 1
+            if self.turn_of_player == 1 and -diff< 6:
+                if self.board[column] == 1 \
+                        and self.board[column + 2*(5-column) + 2] > 0:
+                    self.board[6] += self.board[column + 2*(5-column) + 2] + 1
+                    self.board[column + 2*(5-column) + 2] = 0
+                    self.board[column] = 0
+                    return
+            if self.turn_of_player == 2 and column + amount_of_stones < 13:
+                if self.board[column] == 1 \
+                        and self.board[column - 2*(column-7) -1] > 0:
+                    self.board[6] += self.board[column - 2*(column-7) -1] + 1
+                    self.board[column - 2*(column-7) -1] = 0
+                    self.board[column] = 0
+                    return
+
+        elif self.turn_of_player == 1 and column + amount_of_stones < 6:
             if self.board[column + amount_of_stones] == 1 \
                     and self.board[column + amount_of_stones + (column + 1)] > 0:
-                self.board[6] += self.board[column + amount_of_stones + (column + 1)]
+                self.board[6] += self.board[column + amount_of_stones + (column + 1)] + 1
                 self.board[column + amount_of_stones + (column + 1)] = 0
+                self.board[column + amount_of_stones] = 0
+                return
+        elif self.turn_of_player == 2 and column + amount_of_stones < 13:
+            if self.board[column + amount_of_stones] == 1 \
+                    and self.board[13 - (column + amount_of_stones) - 1] > 0:
+                self.board[6] += self.board[13 - (column + amount_of_stones) - 1] + 1
+                self.board[13 - (column + amount_of_stones) - 1] = 0
                 self.board[column + amount_of_stones] = 0
                 return
 

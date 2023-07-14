@@ -20,13 +20,13 @@ class TestGame(TestCase):
 
     def test_backToOwnBoardP1(self):
         game1 = Kahala.Game()
-        game1.board = np.asarray([0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0])
+        game1.board = np.asarray([1, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0])
         game1.play(1)
-        self.assertEqual([1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0], game1.board.tolist())
+        self.assertEqual([2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0], game1.board.tolist())
         game2 = Kahala.Game()
         game2.board = np.asarray([13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         game2.play(6)
-        self.assertEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], game2.board.tolist())
+        self.assertEqual([0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 0, 0], game2.board.tolist())
         game3 = Kahala.Game()
         game3.board = np.asarray([0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         game3.play(5)
@@ -36,7 +36,7 @@ class TestGame(TestCase):
         game1 = Kahala.Game()
         game1.board = np.asarray([1, 1, 1, 1, 0, 1, 0, 1, 8, 1, 1, 1, 1, 0])
         game1.play(3)
-        self.assertEqual([1, 1, 1, 0, 0, 1, 8, 1, 0, 1, 1, 1, 1, 0], game1.board.tolist())
+        self.assertEqual([1, 1, 1, 0, 0, 1, 9, 1, 0, 1, 1, 1, 1, 0], game1.board.tolist())
 
     def test_fillingUpByTravelingP2(self):
         game1 = Kahala.Game()
