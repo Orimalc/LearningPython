@@ -57,10 +57,10 @@ class Game:
 
     def game_over(self):
 
-        if np.asarray(self.board[0:6]).all() or np.asarray(self.board[7:13]).all():
-            return True
+        if np.asarray(self.board[0:6]).any() and np.asarray(self.board[7:13]).any():
+            return False
 
-        return False
+        return True
 
     def try_to_steal(self, distance, column, amount_of_stones, diff=0):
 
@@ -76,7 +76,7 @@ class Game:
             if self.turn_of_player == 2 and column + amount_of_stones < 13:
                 if self.board[column] == 1 \
                         and self.board[column - 2*(column-7) -1] > 0:
-                    self.board[6] += self.board[column - 2*(column-7) -1] + 1
+                    self.board[13] += self.board[column - 2*(column-7) -1] + 1
                     self.board[column - 2*(column-7) -1] = 0
                     self.board[column] = 0
                     return
@@ -91,7 +91,7 @@ class Game:
         elif self.turn_of_player == 2 and column + amount_of_stones < 13:
             if self.board[column + amount_of_stones] == 1 \
                     and self.board[13 - (column + amount_of_stones) - 1] > 0:
-                self.board[6] += self.board[13 - (column + amount_of_stones) - 1] + 1
+                self.board[13] += self.board[13 - (column + amount_of_stones) - 1] + 1
                 self.board[13 - (column + amount_of_stones) - 1] = 0
                 self.board[column + amount_of_stones] = 0
                 return

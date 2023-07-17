@@ -68,3 +68,17 @@ class TestGame(TestCase):
         game3.play(4)
         game3.play(5)
         self.assertEqual([1, 1, 1, 2, 1, 1,0, 1, 1, 2, 1, 1, 1, 1], game3.board.tolist())
+
+    def test_stealingP2(self):
+        game1 = Kahala.Game()
+        game1.board = np.asarray([10, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0])
+        game1.play(4)
+        game1.play(4)
+        self.assertEqual([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 11], game1.board.tolist())
+
+    def test_gameOver(self):
+        game1 = Kahala.Game()
+        game1.board = np.asarray([0,0,0,0,0,1,0,0,0,0,0,0,0,0])
+        game1.play(1)
+
+        self.assertTrue(game1.game_over())
