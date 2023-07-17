@@ -25,14 +25,14 @@ class Game:
             else:
                 self.board[6] -= 1
 
-        if column + amount_of_stones > 13:
+        if column + amount_of_stones >= 13:
             diff = 13 - (column + amount_of_stones)
             self.board[column + 1: column + amount_of_stones + diff + 1] += 1
             self.board[0:-diff] += 1
-            self.try_to_steal(distance, column, amount_of_stones, diff)
+            self.try_to_steal(column, amount_of_stones, diff, useDiff=True)
         else:
             self.board[column + 1:column + amount_of_stones + 1] += 1
-            self.try_to_steal(distance, column, amount_of_stones)
+            self.try_to_steal(column, amount_of_stones)
         if amount_of_stones != distance:
             self.turn_of_player = self.turn_of_player % 2 + 1
 
@@ -62,10 +62,16 @@ class Game:
 
         return True
 
-    def try_to_steal(self, distance, column, amount_of_stones, diff=0):
+    def try_to_steal(self, column, amount_of_stones, diff=0, useDiff=False):
 
-        if -diff > 0:
-            column = -diff - 1
+        if useDiff:
+            column_proxy = abs(diff) - 1 #for comfort I added 1 before in play() now I have to rethink that decision
+            amount_of_stones_proxy = 0
+        else:
+            column_proxy = column
+            amount_of_stones_proxy = amount_of_stones
+
+            """
             if self.turn_of_player == 1 and -diff< 6:
                 if self.board[column] == 1 \
                         and self.board[column + 2*(5-column) + 2] > 0:
@@ -80,20 +86,15 @@ class Game:
                     self.board[column - 2*(column-7) -1] = 0
                     self.board[column] = 0
                     return
-
-        elif self.turn_of_player == 1 and column + amount_of_stones < 6:
-            if self.board[column + amount_of_stones] == 1 \
-                    and self.board[column + amount_of_stones + (column + 1)] > 0:
-                self.board[6] += self.board[column + amount_of_stones + (column + 1)] + 1
-                self.board[column + amount_of_stones + (column + 1)] = 0
-                self.board[column + amount_of_stones] = 0
-                return
-        elif self.turn_of_player == 2 and column + amount_of_stones < 13:
-            if self.board[column + amount_of_stones] == 1 \
-                    and self.board[13 - (column + amount_of_stones) - 1] > 0:
-                self.board[13] += self.board[13 - (column + amount_of_stones) - 1] + 1
-                self.board[13 - (column + amount_of_stones) - 1] = 0
-                self.board[column + amount_of_stones] = 0
+            """
+        # 13 - 7*(self.turn_of_player % 2) to reduce if statements
+        if column_proxy + amount_of_stones_proxy < 13 - 7*(self.turn_of_player % 2):
+            if self.board[12 - (column_proxy + amount_of_stones_proxy)] > 0 and \
+                    self.board[column_proxy + amount_of_stones_proxy] == 1:
+                self.board[13 - 7*(self.turn_of_player % 2)] += self.board[12 - (column_proxy + amount_of_stones_proxy)] \
+                                                                + 1
+                self.board[12 - (column_proxy + amount_of_stones_proxy)] = 0
+                self.board[column_proxy + amount_of_stones_proxy] = 0
                 return
 
 
